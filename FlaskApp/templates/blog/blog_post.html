@@ -1,0 +1,289 @@
+{% extends 'blog/blog_layout.html' %}
+
+{% block navbar %}
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="nav-scroller py-1 mb-2 ">
+              <nav class="nav d-flex justify-content-between">
+                  {% for category in categories %}
+                  <a class="p-2 link-secondary" href="{{ url_for('blog.post_per_category', category_name=category.category_name.replace(' ', '-'))}}">
+                      {{ category.category_name }}
+                  </a>
+                  {% endfor %}
+              </nav>
+          </div>
+      </div>
+  </div>
+{% endblock navbar %}
+
+{% block content %}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v10.0" nonce="mumK7Uq3"></script>
+    <div class="container d-grid gap-3">
+        <div class="row" style="background-color: #726a95;">
+            <div class="col-lg-12 py-1">
+                <a href="{{ url_for('blog.index')}}" style="font-size: 15px; text-decoration: none;" class="ms-1 text-light"><b>Accueil</b></a>
+                {% for category in categories %}
+                    {% if post.category_id == category.id %}
+                        <b style="font-size: 15px; color: rgb(240,240,240);"> >
+                            <a href="{{ url_for('blog.post_per_category', category_name=category.category_name.replace(' ', '-')) }}" class="text-light" style="text-decoration:none;">
+                                {{ category.category_name.capitalize() }}
+                            </a>
+                            >
+                        </b>
+                        <small style="font-size: 15px; color: rgb(240,240,240);"><b>{{ post.title }}</b></small>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-lg-8 pt-3 ">
+                {% if post %}
+                    <h2 class="pb-1" >{{ post.title }}</h2>
+                    <small style="font-size: 13px;" class="text-muted"><span class="iconify me-2 mb-2" data-icon="ant-design:calendar-outlined" data-inline="false"></span>
+                        Publié le {{ post.date_posted.strftime('%d/%m/%Y') }}
+                        <span class="iconify ms-2 me-2 mb-2" data-icon="bi:person-fill" data-inline="false"></span>
+                        {% for moderator in moderators %}
+                            {% if post.moderator_id == moderator.id %}
+                                {{ moderator.username }}
+                            {% endif %}
+                        {% endfor %}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                {% if post %}
+                    <article class="blog-post">
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex" >
+                            {% if post.img_title %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_title) }}" alt="" class="img-fluid post-thumb rounded w-75 d-flex d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        <br>
+                        <p class="mt-3">{{ post.introduction }}</p>
+                        <br>
+                        <blockquote>
+                          <p>{{ post.p_intro }}</p>
+                        </blockquote>
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h1 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h1) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h1 != "" %}
+                          <h3 class="my-4">{{ post.h1 }}</h3>
+                          <p>
+                              {{ post.p_h1 }}
+                          </p>
+                        <br>
+                        {% endif %}
+                        <br>
+                        <!-- sub_title 2 -->
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h2 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h2) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                         {% if post.h2 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h2}}</h4>
+                            <p>
+                                {{ post.p_h2 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 3 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h3 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h3) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h3 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h3 }}</h4>
+                            <p>
+                                {{ post.p_h3 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 4 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h4 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h4) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h4 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h4 }}</h4>
+                            <p>
+                                {{ post.p_h4 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 5 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h5 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h5) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h5 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h5 }}</h4>
+                            <p>
+                                {{ post.p_h5 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 6 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h6 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h6) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h6 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h6 }}</h4>
+                            <p>
+                                {{ post.p_h6 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 7 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h7 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h7) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h7 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h7 }}</h4>
+                            <p>
+                                {{ post.p_h7 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 8 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h8 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h8) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h8 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h8 }}</h4>
+                            <p>
+                                {{ post.p_h8 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 9 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h9 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h9) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h9 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h9 }}</h4>
+                            <p>
+                                {{ post.p_h9 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- sub_title 10 -->
+                        <br>
+                        <div class="col-auto d-lg-block d-flex d-sm-flex d-md-flex">
+                            {% if post.img_h10 %}
+                                <img src="{{ url_for('static', filename='upload/'+ post.img_h10) }}" alt="" class="img-fluid post-thumb w-50 d-sm-flex d-md-flex">
+                            {% endif %}
+                        </div>
+                        {% if post.h10 != "" %}
+                            <br>
+                            <h4 class="mb-4">{{ post.h10 }}</h4>
+                            <p>
+                                {{ post.p_h10 }}
+                            </p>
+                        <br>
+                        {% endif %}
+                        <!-- Conclusion -->
+                        <br>
+                        <h4 class="mb-4">{{ post.conclusion }}</h4>
+                        <p>
+                            {{ post.p_conclusion }}
+                        </p>
+                    </article><!-- /.blog-post -->
+                {% endif %}
+                <div class="block-comment ms-4 mt-5 border-top">
+                    <h4 class="text-muted pt-4">Vous avez aimer cet article ? laissez-nous un commentaire !</h4>
+                    <div class="row mt-3">
+                    <div class="fb-comments" data-href="https://joblogueur.com/publication?post_title={{titre}}" data-width="500" data-numposts="10" loading="lazy"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <h4 class="mb-3">Newsletter</h4>
+                <div class="p-4 mb-3 bg-light rounded">
+                    <form action="{{ url_for('blog.newsletter_invitation')}}" method="post">
+
+                      <div class="form-group">
+                        <input type="email" name="usermail" class="form-control" placeholder="Votre email" value="">
+                      </div>
+
+                      <div class="form-group form-check mt-4">
+                        <input type="checkbox" class="form-check-input" name="checkboxBtn">
+                        <label class="form-check-label" style="font-size: 12px;">Recevoir les dernières publications ?</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-3" style="font-size: 17px;">Recevoir</button>
+                    </form>
+                </div>
+
+                <div class="aside-link">
+                    <h4 class="border-bottom pb-3 mt-5">Archives</h4>
+                    <ul class="my-3">
+                            {% for category in categories %}
+                                {% if category.category_name == "BUSINESS" %}
+                                    <li class="my-3">
+                                        <a class="link-success" href="{{ url_for('blog.post_per_category', category_name=category.category_name.capitalize().replace(' ', '-'))}}" style="text-decoration:none;">
+                                            Top 5 des entreprises de E-commerce les plus florissantes
+                                        </a>
+                                    </li>
+                                {% elif category.category_name == "RESSOURCES" %}
+                                    <li class="my-3">
+                                        <a class="link-success" href="{{ url_for('blog.post_per_category', category_name=category.category_name.capitalize().replace(' ', '-'))}}" style="text-decoration:none;">
+                                            Comment gagner de l'argent sur internet
+                                        </a>
+                                    </li>
+                                {% elif category.category_name == "FORMATIONS" %}
+                                    <li class="my-3">
+                                        <a class="link-success" href="{{ url_for('blog.post_per_category', category_name=category.category_name.capitalize().replace(' ', '-'))}}" style="text-decoration:none;">
+                                            Les meilleurs formations en 2021
+                                        </a>
+                                    </li>
+                                {% elif category.category_name == "TUTORIELS" %}
+                                    <li class="my-3">
+                                        <a class="link-success" href="{{ url_for('blog.post_per_category', category_name=category.category_name.capitalize().replace(' ', '-'))}}" style="text-decoration:none;">
+                                            Créer son blog avec WordPress
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>{{title}}</title>
+    <!-- Joblogueur icon -->
+    <link rel="icon" href="{{ url_for('static', filename='/img/Logo-sm.png')}}" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <!-- MDB-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/auth/mdb.min.css') }}" />
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css') }}" />
+
+  </head>
+  <body>
+    <main class="mt-5">
+      <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6 col-lg-6 d-md-none d-lg-none d-xl-none border-bottom pb-3 mb-3">
+                <a href="{{ url_for('blog.index')}}" >
+                    Accueil
+                </a>
+            </div>
+          <div class="col-md-6 col-lg-6 d-none d-sm-none d-md-block d-lg-block">
+              <a href="{{ url_for('blog.index')}}">
+                <img src="{{ url_for('static', filename='img/Logo.png') }}" class="img-fluid w-75 rounded mb-4">
+              </a>
+          </div>
+          <div class="col-md-1 col-lg-1"></div>
+          <div class="col-md-4 col-lg-4">
+            <h1 class=" mb-5 text-center">{{ title }}</h1>
+              <!-- Display Error messages -->
+            <div class="mb-4">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Form group -->
+            <form action="" method="POST">
+              {{ form.hidden_tag() }}
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                    {{ form.email(class = "form-control") }}
+                    {{ form.email.label(class = "form-label", for="form.email") }}
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                {{ form.password(class = "form-control") }}
+                {{ form.password.label(class = "form-label", for="form.password") }}
+              </div>
+
+                <!-- 2 column grid layout for inline styling -->
+              <div class="row my-4">
+                <div class="col text-center">
+                  <!-- Simple link -->
+                  <a href="{{ url_for('auth.reset_request') }}">Mot de passe oublié?</a>
+                </div>
+              </div>
+
+              <!-- Submit button -->
+               {{ form.submit(class = "btn btn-primary btn-block") }}
+            </form>
+            <!-- End form -->
+          </div>
+          <div class="col-md-1 col-lg-1"></div>
+        </div>
+      </div>
+    </main>
+    <!-- End main -->
+
+    <!-- Footer -->
+    <div class="container-fluid">
+      <footer class="bg-light text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+          © 2021 Copyright:
+          <a class="text-dark" href="https://www.digitalschools.sn/" target="_blank">digitalschools</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <!-- End footer -->
+    </div>
+
+    <!-- End your project here-->
+  </body>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+</html>

@@ -1,0 +1,116 @@
+{% extends 'admin/dashboard_layout.html' %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="mt-5 mb-3 pt-5 border-bottom"><b class="text-muted">GESTION</b> <b style="color: #726a95;">ARCHIVES</b></h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <small class="text-muted mt-4 mb-5">Cliquer sur une ligne pour consulter une archive. <br>
+                    Les publications, commentaires
+                    {% if current_user.is_admin %}
+                        et modérateurs
+                    {% endif %}
+                        archivés sont en attente de validation.
+                    </small>
+                </div>
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <a href="" class="btn btn-outline-primary mb-5">Créer une archive</a>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="mt-5 my-3"><b style="color: #726a95;">PUBLICATIONS</b></h6>
+            </div>
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Introduction</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    {% for post in posts %}
+                        {% if post.display_or_not == False %}
+                            <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <form action="{{ url_for('admin.post', post_id=post.id) }}", method="post">
+                                        <button class="btn-primary mb-2 rounded"><span class="iconify" data-icon="carbon:view-filled" data-inline="false"></span></button>
+                                    </form>
+                                    <form action="{{ url_for('admin.delete_post', post_id= post.id) }}", method="post">
+                                        <button class="btn-danger rounded"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="false"></span></button>
+                                    </form>
+                                </th>
+                                <td>{{ post.title }}</td>
+                                <td>{{ post.introduction }}</td>
+                                <td>{{ post.paragraph_intro }}</td>
+                            </tr>
+                            </tbody>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    </div>
+
+
+    {% if current_user.is_admin %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                <div class="row">
+                    <h6 class="mt-5 my-3 pb-2"><b style="color: #726a95;">COMMENTAIRES</b><b class="text-muted"> EN COURS DE VALIDATION</b></h6>
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Auteur</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Contenu</th>
+                            <th scope="col">Publication associée</th>
+                        </tr>
+                    </thead>
+                    {% for comment in comments %}
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                <form action="{{ url_for('admin.change_comment_status', comment_id=comment.id ) }}" , method="post">
+                                    <button class="btn-primary mb-2 rounded"><span class="iconify" data-icon="carbon:view-filled" data-inline="false"></span></button>
+                                </form>
+                                <form action="{{ url_for('admin.delete_comment', comment_id=comment.id ) }}" , method="post">
+                                    <button onclick="return confirm('Etes-vous sure ?')" class="btn-danger rounded"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="false"></span></button>
+                                </form>
+                            </th>
+                            <td>{{ comment.name_author }}</td>
+                            <td>{{ comment.email_author }}</td>
+                            <td>{{ comment.content }}</td>
+                            <td>{{ comment.post_id }}</td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                <div class="row">
+                    <h6 class="mt-5 my-3"><b style="color: #726a95;">MODERATEURS</b></h6>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

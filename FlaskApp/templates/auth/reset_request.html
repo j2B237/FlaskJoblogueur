@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>{{title}}</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/DS-md-200x200.png')}}" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <!-- MDB-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/auth/mdb.min.css') }}" />
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css') }}" />
+
+  </head>
+  <body>
+    <main class="mt-5">
+      <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6 col-lg-6 d-md-none d-lg-none d-xl-none border-bottom pb-3 mb-3">
+                <a href="{{ url_for('blog.index')}}" >
+                    Accueil
+                </a>
+            </div>
+          <div class="col-md-4 col-lg-4 d-none d-sm-none d-md-block d-lg-block">
+              <a href="{{ url_for('blog.index')}}">
+                <img src="{{ url_for('static', filename='img/DS_200x200.png') }}" class="img-fluid w-100 shadow-5 rounded mb-4">
+              </a>
+          </div>
+          <div class="col-md-1 col-lg-1"></div>
+          <div class="col-md-5 col-lg-5">
+            <h2 class=" mb-5">{{ title }}</h2>
+              <!-- Display Error messages -->
+            <div class="mb-4">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <small style="font-weight: bold;" class="text-muted">Saisissez votre adresse e-mail et nous vous enverrons un e-mail contenant des instructions pour réinitialiser votre mot de passe</small>
+            <!-- Form group -->
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                    <div class="form-group mb-5">
+                        {{ form.email.label(class="form-control-label mb-2 mt-2") }}
+                         {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group mt-3 mb-3">
+                        {{ form.submit(class="btn btn-outline-success") }}
+                    </div>
+            </form>
+            <!-- End form -->
+              <div>
+                  <small style="font-weight: bold;" class="text-muted">Si vous ne recevez pas d'e-mail de notre part dans quelques minutes, vérifiez votre filtre anti-spam car parfois ils s'y retrouvent.
+                      L'e-mail proviendra de help@digitalschools.sn</small>
+              </div>
+          </div>
+          <div class="col-md-1 col-lg-1"></div>
+        </div>
+      </div>
+    </main>
+    <!-- End main -->
+
+    <!-- Footer -->
+    <div class="container-fluid">
+      <footer class="bg-light text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+          © 2021 Copyright:
+          <a class="text-dark" href="https://www.digitalschools.sn/" target="_blank">digitalschools</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <!-- End footer -->
+    </div>
+
+    <!-- End your project here-->
+  </body>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+</html>

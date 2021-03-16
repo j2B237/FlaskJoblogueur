@@ -1,0 +1,89 @@
+{% extends 'admin/dashboard_layout.html' %}
+
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 d-grid gap-3">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="mt-5 mb-3 pt-5 border-bottom"><b class="text-muted">PROFIL</b>
+                        <b style="color: #726a95;">MODERATEUR {{ moderator.username.upper() }}</b>
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                    <div class="item mb-5">
+                        <div class="media">
+                            <img class="mr-5 img-fluid rounded post-thumb w-25 h-25 d-sm-flex d-md-flex" src="{{ image }}" alt="image">
+                            <div class="media-body">
+                                <p class="title mb-1"><b>Nom utilisateur :</b> {{ moderator.username }}</p>
+                                <p class="title mb-1"><b>Email :</b> {{ moderator.email }}</p>
+                                <div class="meta mb-1"><span class="date"><b>Membre depuis le</b> {{ moderator.created_on.strftime('%d/%m/%Y') }} </span></div>
+                                <div class="intro"></div>
+                                <a class="more-link" href="">Contactez moi &rarr;</a> | <a class="more-link" href="{{ url_back_to }}">Retour &rarr;</a>
+                            </div><!--//media-body-->
+                        </div><!--//media-->
+                    </div><!--//item-->
+                    <div>
+                        <h5 class="mt-5 mb-3 py-3"><b class="text-muted">Publications associées</b></h5>
+                        <table class="table table-hover mt-5">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Actions</th>
+                                    <th scope="col">Titre</th>
+                                    <th scope="col">Introduction</th>
+                                    <th scope="col">Total commentaires</th>
+                                </tr>
+                            </thead>
+                            {% for post in posts.items %}
+                                <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <form action="{{ url_for('admin.post', post_id=post.id )}}" method="post">
+                                            <button class="btn-primary mb-2 rounded"><span class="iconify" data-icon="carbon:view-filled" data-inline="false"></span></button>
+                                        </form>
+                                        <form action="{{ url_for('admin.delete_post', post_id=post.id )}}" method="post">
+                                            <button onclick="return confirm('Etes-vous sure ?')" class="btn-danger rounded"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="false"></span></button>
+                                        </form>
+                                    </th>
+                                    <td>{{ post.title }}</td>
+                                    <td>{{ post.introduction }}</td>
+                                    <td class="ms-3">
+                                        {% for post_comments in profil_posts_comments %}
+                                            {% if post_comments['post_id'] == post.id %}
+                                                {{ post_comments['total'] }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+                                {% if page_num %}
+                                    {% if posts.page == page_num %}
+                                        <a class="btn btn-info my-4" href="{{ url_for('admin.moderator', moderator_username=moderator.username, page=page_num)}}">{{ page_num }}</a>
+                                    {% else %}
+                                        <a class="btn btn-outline-info my-4" href="{{ url_for('admin.moderator', moderator_username=moderator.username, page=page_num)}}">{{ page_num }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-lg-6"></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    </div>
+{% endblock content %}

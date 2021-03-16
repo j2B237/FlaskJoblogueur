@@ -1,0 +1,280 @@
+{% extends 'admin/dashboard_layout.html' %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 d-grid gap-3">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="mt-5 mb-3 pt-5 border-bottom"><b class="text-muted">NOUVELLE</b> <b style="color: #726a95;">PUBLICATION</b></h5>
+                </div>
+                <!-- Display flashed messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{category}}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <!-- Category -->
+                        <div class="from-group">
+                            <select name="categorie" id="categorie" class="form-control">
+                                {% for categorie in categories %}
+                                    <option value="{{ categorie.category_name}}">{{ categorie.category_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Publish or not -->
+                        <div class="form-group">
+                            {{ form.Not_Publish.label(class = "form-label my-3 text-muted") }}
+                            {{ form.Not_Publish(class = "list-unstyled mb-3") }}
+                        </div>
+
+                        <!--******************** POST MAIN IMAGE *************************** -->
+                        <div class="form-group">
+                            {{ form.img_title.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_title(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {% if form.title.errors %}
+                                {{ form.title(class = "form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title.label(class = "form-label my-3 text-muted") }}
+                                {{ form.title(class = "form-control mb-3") }}
+                            {% endif %}
+                        </div>
+
+                        <!-- Post introduction -->
+                        <div class="form-group">
+                            {% if form.introduction.errors %}
+                                {{ form.introduction(class = "form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.introduction.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.introduction.label(class = "form-label my-3 text-muted") }}
+                                {{ form.introduction(class = "form-control mb-3") }}
+                            {% endif %}
+                        </div>
+
+                        <!-- Introduction paragraph-->
+                        <div class="form-group">
+                            {% if form.p_intro.errors %}
+                                {{ form.p_intro(class = "form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.p_intro.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.p_intro.label(class = "form-label my-3 text-muted") }}
+                                {{ form.p_intro(class = "form-control mb-3", Rows="5") }}
+                            {% endif %}
+                        </div>
+
+                        <!--******************** sub_title_1 *************************** -->
+                        <div class="form-group">
+                            {{ form.img_h1.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h1(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h1.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h1(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h1.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h1(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_2 *************************** -->
+                        <div class="form-group">
+                            {{ form.img_h2.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h2(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h2.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h2(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h2.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h2(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_3 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h3.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h3(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h3.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h3(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h3.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h3(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                         <!--******************** sub_title_4 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h4.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h4(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h4.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h4(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h4.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h4(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_5 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h5.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h5(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h5.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h5(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h5.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h5(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_6 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h6.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h6(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h6.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h6(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h6.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h6(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_7 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h7.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h7(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h7.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h7(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h7.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h7(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_8 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h8.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h8(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h8.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h8(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h8.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h8(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_9 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h9.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h9(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h9.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h9(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h9.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h9(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!--******************** sub_title_10 *************************** -->
+
+                        <div class="form-group">
+                            {{ form.img_h10.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.img_h10(class = "form-control mb-3") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.h10.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.h10(class = "form-control mb-3") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.p_h10.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_h10(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!-- Conclusion -->
+                        <div class="form-group">
+                            {{ form.conclusion.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.conclusion(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <!-- paragraph_conclusion-->
+                        <div class="form-group">
+                            {{ form.p_conclusion.label(class = "form-label mb-3 text-muted") }}
+                            {{ form.p_conclusion(class = "form-control mb-3", Rows="5") }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                {{ form.submit(class = "btn btn-success my-3") }}
+                            </div>
+                            <div class="col-6">
+                                <a href="{{ url_for('admin.list_all_post') }}" class="btn btn-danger my-3">Annuler</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    </div>
+{% endblock content %}

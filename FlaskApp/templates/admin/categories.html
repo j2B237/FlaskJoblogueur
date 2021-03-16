@@ -1,0 +1,80 @@
+{% extends 'admin/dashboard_layout.html' %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 d-grid gap-3">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="mt-5 mb-3 pt-5 border-bottom"><b class="text-muted">GESTION</b> <b style="color: #726a95;">CATEGORIES</b></h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <small class="text-muted mt-4">Cliquer sur une ligne pour consulter une fiche d'une categorie</small>
+                </div>
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-4 my-3">
+                    <a href="{{ url_for('admin.create_category') }}" class="btn btn-outline-primary">Creer une categorie</a>
+                </div>
+                <!-- Display flashed messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{category}}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="row">
+                <table class="table table-hover mt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Date de création</th>
+                            <th scope="col">Publication(s)</th>
+                        </tr>
+                    </thead>
+                    {% for p in pub_per_cat %}
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                <form action="{{ url_for('admin.edit_category', category_id= p['category_id'] ) }}">
+                                    <button class="btn-primary mb-2 rounded"><span class="iconify" data-icon="entypo:edit" data-inline="false"></span></button>
+                                </form>
+
+                                <form action="{{ url_for('admin.delete_category', category_id= p['category_id'] ) }}", method="post">
+                                    <button onclick="return confirm('Etes-vous sure?')" class="btn-danger rounded"><span class="iconify" data-icon="fluent:delete-20-filled" data-inline="false"></span></button>
+                                </form>
+                            </th>
+                            <td>{{ p["category_name"] }}</td>
+                            <td>{{ p["date_posted"].strftime('%d-%m-%Y') }}</td>
+                            <td>{{ p["posts"] }} </td>
+                        </tr>
+                        </tbody>
+                {% endfor %}
+            </table>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    {% for page_num in categories.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+                        {% if page_num %}
+                            {% if categories.page == page_num %}
+                                <a class="btn btn-info my-4" href="{{ url_for('admin.list_all_categories', page=page_num)}}">{{ page_num }}</a>
+                            {% else %}
+                                <a class="btn btn-outline-info my-4" href="{{ url_for('admin.list_all_categories', page=page_num)}}">{{ page_num }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-lg-6"></div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    </div>
+{% endblock content %}

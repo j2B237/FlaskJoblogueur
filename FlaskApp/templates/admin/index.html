@@ -1,0 +1,41 @@
+{% extends 'admin/dashboard_layout.html' %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 d-grid gap-3">
+            <!-- Ligne 1 -->
+            <div class="row my-5">
+                <!-- Diviser en 3 colonnes-->
+                <div class="col-lg-4 mt-5">
+                    <!-- col 1 Moderateur -->
+                    <div class="moderator-view text-center"
+                         style="width: 200px; height: 200px; border: 0.5px solid none; background-color: green; border-radius: 50%;">
+                        <div class="content align-bottom">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-5">
+                    <!-- col 2 Post -->
+                    <div class="post-view"
+                        style="width: 200px; height: 200px; border: 0.5px solid none; background-color: yellow; border-radius: 50%;">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-5">
+                    <!-- col 3 Category -->
+                    <div class="post-view"
+                        style="width: 200px; height: 200px; border: 0.5px solid none; background-color: red; border-radius: 50%;">
+
+                    </div>
+                </div>
+            </div>
+            <!-- Ligne 2 -->
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    </div>
+{% endblock content %}
